@@ -115,12 +115,17 @@ if __name__ == '__main__':
     uniques_iterations = 0
 
     while not is_solved(a):
-        prune_iterations += prune_cells(a)
+        try:
+            prune_iterations += prune_cells(a)
 
-        if is_solved(a):
-            break
+            if is_solved(a):
+                break
 
-        uniques_iterations += find_uniques(a)
+            uniques_iterations += find_uniques(a)
+        except KeyboardInterrupt:
+            print()
+            print_incomplete(a)
+            sys.exit(0)
 
     print_complete(a)
     print('iterations: {} / {}'.format(prune_iterations, uniques_iterations))
