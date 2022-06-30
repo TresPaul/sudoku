@@ -1,4 +1,4 @@
-from sys import argv
+import sys
 
 
 # UTILS
@@ -108,7 +108,7 @@ def find_uniques(a):
 
 
 if __name__ == '__main__':
-    p = parse_file(argv[1])
+    p = parse_file(sys.argv[1])
     a = fill_possibilities(p)
     
     prune_iterations = 0
