@@ -11,6 +11,14 @@ def parse_file(filename):
 def fill_possibilities(p):
     return [[cell if cell != [0] else [1,2,3,4,5,6,7,8,9] for cell in row] for row in p]
 
+def do_algorithm(algorithm, a):
+    changed = True
+    i = 0
+    while changed == True:
+        changed = algorithm(a)
+        i += 1
+    return i
+
 # checking
 
 def is_solved(a):
@@ -68,14 +76,6 @@ def prune_cells_once(a):
 
     return changed
 
-def prune_cells(a):
-    changed = True
-    i = 0
-    while changed == True:
-        changed = prune_cells_once(a)
-        i += 1
-    return i
-
 
 # ALGORITHM 2: Find Uniques
 
@@ -98,14 +98,6 @@ def find_uniques_once(a):
 
     return changed
 
-def find_uniques(a):
-    changed = True
-    i = 0
-    while changed == True:
-        changed = find_uniques_once(a)
-        i += 1
-    return i
-
 
 if __name__ == '__main__':
     p = parse_file(sys.argv[1])
@@ -116,12 +108,12 @@ if __name__ == '__main__':
 
     while not is_solved(a):
         try:
-            prune_iterations += prune_cells(a)
+            prune_iterations += do_algorithm(prune_cells_once, a)
 
             if is_solved(a):
                 break
 
-            uniques_iterations += find_uniques(a)
+            uniques_iterations += do_algorithm(find_uniques_once, a)
         except KeyboardInterrupt:
             print()
             print_incomplete(a)
